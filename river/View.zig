@@ -62,6 +62,7 @@ const State = struct {
     float: bool = false,
     fullscreen: bool = false,
     urgent: bool = false,
+    single: bool = false,
 };
 
 const SavedBuffer = struct {

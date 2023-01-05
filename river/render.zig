@@ -134,6 +134,17 @@ pub fn renderOutput(output: *Output) void {
         renderLayer(output, output.getLayer(.background).*, &now, .toplevels);
         renderLayer(output, output.getLayer(.bottom).*, &now, .toplevels);
 
+        // If single view border mode is enabled, detemine if we have a single view to render
+        if (server.config.single_view_mode == .@"on-multi-output" or
+            (server.config.single_view_mode == .@"on-single-output" and
+            server.root.outputs.len == 1))
+        {
+            it = ViewStack(View).iter(output.views.last, .reverse, output.current.tags, renderFilter);
+            if (it.next()) |view| {
+                view.current.single = (it.next() == null and !view.current.float);
+            }
+        }
+
         // The first view in the list is "on top" so always iterate in reverse.
 
         // non-focused, non-floating views
@@ -376,6 +387,7 @@ fn renderBorders(output: *const Output, view: *View) void {
     const config = &server.config;
     const color = blk: {
         if (view.current.urgent) break :blk &config.border_color_urgent;
+        if (view.current.single) break :blk &config.border_color_single;
         if (view.current.focus != 0) break :blk &config.border_color_focused;
         break :blk &config.border_color_unfocused;
     };

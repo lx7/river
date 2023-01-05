@@ -46,6 +46,12 @@ pub const HideCursorWhenTypingMode = enum {
     enabled,
 };
 
+pub const SingleViewMode = enum {
+    normal,
+    @"on-single-output",
+    @"on-multi-output",
+};
+
 /// Color of background in RGBA with premultiplied alpha (alpha should only affect nested sessions)
 background_color: [4]f32 = [_]f32{ 0.0, 0.16862745, 0.21176471, 1.0 }, // Solarized base03
 
@@ -60,6 +66,13 @@ border_color_unfocused: [4]f32 = [_]f32{ 0.34509804, 0.43137255, 0.45882353, 1.0
 
 /// Color of border of urgent window in RGBA with premultiplied alpha
 border_color_urgent: [4]f32 = [_]f32{ 0.86274510, 0.19607843, 0.18431373, 1.0 }, // Solarized red
+
+/// Color of border of single window in RGBA
+border_color_single: [4]f32 = [_]f32{ 0, 0, 0, 1.0 }, // black
+
+/// single_view_mode defines how to draw borders when only one single 
+/// (non-fullscreen) window is visible
+single_view_mode: SingleViewMode = .normal,
 
 /// Map of keymap mode name to mode id
 /// Does not own the string keys. They are owned by the corresponding Mode struct.

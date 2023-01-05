@@ -93,6 +93,34 @@ pub fn borderColorUrgent(
     while (it) |node| : (it = node.next) node.data.damage.?.addWhole();
 }
 
+pub fn borderColorSingle(
+    _: *Seat,
+    args: []const [:0]const u8,
+    _: *?[]const u8,
+) Error!void {
+    if (args.len < 2) return Error.NotEnoughArguments;
+    if (args.len > 2) return Error.TooManyArguments;
+
+    server.config.border_color_single = try parseRgba(args[1]);
+
+    var it = server.root.outputs.first;
+    while (it) |node| : (it = node.next) node.data.damage.?.addWhole();
+}
+
+pub fn singleViewMode(
+    _: *Seat,
+    args: []const [:0]const u8,
+    _: *?[]const u8,
+) Error!void {
+    if (args.len < 2) return Error.NotEnoughArguments;
+    if (args.len > 2) return Error.TooManyArguments;
+    server.config.single_view_mode = std.meta.stringToEnum(Config.SingleViewMode, args[1]) orelse
+        return Error.UnknownOption;
+
+    var it = server.root.outputs.first;
+    while (it) |node| : (it = node.next) node.data.damage.?.addWhole();
+}
+
 pub fn setCursorWarp(
     _: *Seat,
     args: []const [:0]const u8,

@@ -274,6 +274,9 @@ A complete list may be found in _/usr/include/linux/input-event-codes.h_
 *border-color-focused* _0xRRGGBB_|_0xRRGGBBAA_
 	Set the border color of focused views.
 
+*border-color-single* _0xRRGGBB_|_0xRRGGBBAA_
+	Set the border color of single views, as defined in *single-view-mode*.
+
 *border-color-unfocused* _0xRRGGBB_|_0xRRGGBBAA_
 	Set the border color of unfocused views.
 
@@ -318,6 +321,18 @@ A complete list may be found in _/usr/include/linux/input-event-codes.h_
 *set-repeat* _rate_ _delay_
 	Set the keyboard repeat rate to _rate_ key repeats per second and
 	repeat delay to _delay_ milliseconds.
+
+*single-view-mode* *normal*|*on-single-output*|*on-multi-output*
+	Defines how to draw borders when only one single (non-fullscreen) window 
+	is visible:
+
+	- _normal_: Use normal border colors. This is the default.
+	- _on-single-output_: If only one view is visible and one output is active, 
+	  _border-color-single_ will be used instead of _border-color-focused_ to reduce 
+	  visual clutter.
+	- _on-multi-output_: If only one view is visible on the focused output,
+	  _border-color-single_ will be used instead of _border-color-focused_ and 
+	  _border_color_unfocused_, even if multiple outputs are active.
 
 *xcursor-theme* _theme_name_ [_size_]
 	Set the xcursor theme to _theme_name_ and optionally set the _size_.
